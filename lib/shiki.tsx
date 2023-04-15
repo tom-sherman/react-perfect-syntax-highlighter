@@ -1,5 +1,5 @@
 "use server";
-import { getHighlighter as shikiGetHighlighter } from "shiki";
+import { getHighlighter as shikiGetHighlighter, setCDN } from "shiki";
 import { cache } from "react";
 import { ShikiRenderer } from "./shiki-renderer";
 
@@ -32,6 +32,7 @@ export async function tokenizeCode(code: string, lang: string, theme: string) {
 }
 
 const highlighterPromise = shikiGetHighlighter({});
+setCDN("https://unpkg.com/shiki/");
 
 const getHighlighter = cache(async (language: string, theme: string) => {
   console.log("Loading highlighter", language, theme);

@@ -50,6 +50,7 @@ export function Button({
   variant,
   size,
   asLink,
+  // @ts-expect-error
   external,
   ...props
 }: ButtonProps) {

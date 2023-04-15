@@ -41,19 +41,11 @@ const getHighlighter = cache(async (language: string, theme: string) => {
 
   let promises = [];
   if (!loadedLanguages.includes(language as any)) {
-    promises.push(
-      import(`./shiki/languages/${language}.json`).then(async (lang) => {
-        await highlighter.loadLanguage(lang);
-      })
-    );
+    promises.push(highlighter.loadLanguage(language as any));
   }
 
   if (!loadedThemes.includes(theme as any)) {
-    promises.push(
-      import(`./shiki/themes/${theme}.json`).then(async (theme) => {
-        await highlighter.loadTheme(theme);
-      })
-    );
+    promises.push(highlighter.loadTheme(theme));
   }
 
   await Promise.all(promises);

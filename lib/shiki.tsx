@@ -1,5 +1,5 @@
 "use server";
-import { getHighlighter as shikiGetHighlighter, setCDN } from "shiki";
+import { getHighlighter as shikiGetHighlighter } from "shiki";
 import { cache } from "react";
 import { ShikiRenderer } from "./shiki-renderer";
 
@@ -32,7 +32,6 @@ export async function tokenizeCode(code: string, lang: string, theme: string) {
 }
 
 const highlighterPromise = shikiGetHighlighter({});
-setCDN("https://unpkg.com/shiki/");
 
 const getHighlighter = cache(async (language: string, theme: string) => {
   console.log("Loading highlighter", language, theme);
@@ -42,11 +41,19 @@ const getHighlighter = cache(async (language: string, theme: string) => {
 
   let promises = [];
   if (!loadedLanguages.includes(language as any)) {
-    promises.push(highlighter.loadLanguage(language as any));
+    promises.push(
+      import(`shiki/languages/${language}.json`).then(async (lang) => {
+        await highlighter.loadLanguage(lang);
+      })
+    );
   }
 
   if (!loadedThemes.includes(theme as any)) {
-    promises.push(highlighter.loadTheme(theme));
+    promises.push(
+      import(`shiki/themes/${theme}.json`).then(async (theme) => {
+        await highlighter.loadTheme(theme);
+      })
+    );
   }
 
   await Promise.all(promises);

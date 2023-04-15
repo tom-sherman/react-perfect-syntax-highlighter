@@ -27,7 +27,7 @@ export async function tokenizeCode(code: string, lang: string, theme: string) {
   const highlighter = await getHighlighter(lang, theme);
   return {
     tokens: highlighter.codeToThemedTokens(code, lang, theme),
-    background: highlighter.getBackgroundColor(),
+    background: highlighter.getBackgroundColor(theme),
   };
 }
 

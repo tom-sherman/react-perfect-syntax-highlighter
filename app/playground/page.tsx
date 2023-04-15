@@ -1,4 +1,4 @@
-import { CodeInput, SettingsDropdown } from "@/lib/settings";
+import { CodePreview, SettingsDropdown } from "@/lib/settings";
 import { Shiki } from "@/lib/shiki";
 import { Heading1 } from "@/lib/typography";
 
@@ -32,9 +32,8 @@ export default function Playground({
         options={["tsx", "html", "css"]}
         name="lang"
       />
-      <CodeInput initialCode={code} />
 
-      <Shiki code={code} lang={lang} theme={theme} />
+      <CodePreview initialCode={code} />
     </>
   );
 }

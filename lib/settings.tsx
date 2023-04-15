@@ -1,6 +1,6 @@
 "use client";
 
-import { startTransition, useState, useTransition } from "react";
+import { cache, use, useState, useTransition } from "react";
 import { Textarea } from "./text-area";
 import {
   Select,
@@ -10,6 +10,10 @@ import {
   SelectItem,
 } from "./select";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { Stack } from "./stack";
+import { tokenizeCode } from "./shiki";
+import { ShikiRenderer } from "./shiki-renderer";
+import { cn } from "./utils";
 
 interface DropdownProps {
   options: string[];
@@ -55,29 +59,45 @@ export function SettingsDropdown({
   );
 }
 
-interface CodeInputProps {
+interface CodePreview {
   initialCode: string;
 }
 
-export function CodeInput({ initialCode }: CodeInputProps) {
+const cachedTokenizeCode = cache((code: string, lang: string, theme: string) =>
+  tokenizeCode(code, lang, theme)
+);
+
+export function CodePreview({ initialCode }: CodePreview) {
   const [code, setCode] = useState(initialCode);
-  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   const searchParams = useSearchParams();
-  const pathname = usePathname();
+  const theme = searchParams.get("theme") ?? "github-dark";
+  const lang = searchParams.get("lang") ?? "tsx";
+  const tokens = use(cachedTokenizeCode(code, lang, theme));
 
   return (
-    <Textarea
-      value={code}
-      onChange={(e) => {
-        const value = e.target.value;
-        setCode(value);
+    <Stack space={1}>
+      <Textarea
+        value={code ?? ""}
+        onChange={async (e) => {
+          const value = e.target.value;
+          startTransition(() => {
+            setCode(value);
+          });
+        }}
+      />
 
-        startTransition(() => {
-          const newSearchParams = new URLSearchParams(searchParams);
-          newSearchParams.set("code", value);
-          router.replace(`${pathname}?${newSearchParams.toString()}`);
-        });
-      }}
-    />
+      <div
+        className={cn({
+          "animate-pulse": isPending,
+        })}
+      >
+        <ShikiRenderer
+          tokens={tokens.tokens}
+          background={tokens.background}
+          lang={lang}
+        />
+      </div>
+    </Stack>
   );
 }

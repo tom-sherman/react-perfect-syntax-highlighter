@@ -1,18 +1,27 @@
 import { Button } from "@/lib/button";
 import { Shiki } from "@/lib/shiki";
 import { Stack } from "@/lib/stack";
-import { Heading1 } from "@/lib/typography";
+import { Heading1, Paragraph } from "@/lib/typography";
 
 export default function Home() {
   return (
     <Stack space={3}>
       <Stack space={1}>
         <Heading1>Shiki React Server Components</Heading1>
-        <Button asLink href="/playground">
-          Playground
-        </Button>
+        <div>
+          <Button asLink href="/playground">
+            Playground
+          </Button>
+          <Button variant="link" asLink href="/explainer">
+            How does it work?
+          </Button>
+        </div>
       </Stack>
-      <Shiki code={sampleCode} lang="tsx" theme="github-dark" />
+
+      <Stack space={1}>
+        <Paragraph>Here's an example:</Paragraph>
+        <Shiki code={sampleCode} lang="tsx" theme="github-dark" />
+      </Stack>
     </Stack>
   );
 }

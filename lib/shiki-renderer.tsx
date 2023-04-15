@@ -17,7 +17,7 @@ export function ShikiRenderer({
 }: Props) {
   return (
     <pre
-      className={clsx("shiki", lang, className)}
+      className={clsx("shiki overflow-x-auto p-4 rounded", lang, className)}
       style={{ backgroundColor: background }}
       tabIndex={0}
     >

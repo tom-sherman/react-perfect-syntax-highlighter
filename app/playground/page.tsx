@@ -1,4 +1,4 @@
-import { CodePreview, ThemeDropdown } from "@/lib/code-preview";
+import { CodeInput, SettingsDropdown } from "@/lib/settings";
 import { Shiki } from "@/lib/shiki";
 import { Heading1 } from "@/lib/typography";
 
@@ -7,7 +7,7 @@ export default function Playground({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  let { lang, theme } = searchParams;
+  let { lang, theme, code } = searchParams;
   if (typeof lang !== "string") {
     lang = "tsx";
   }
@@ -15,21 +15,26 @@ export default function Playground({
     theme = "github-dark";
   }
 
+  if (typeof code !== "string") {
+    code = sampleCode;
+  }
+
   return (
     <>
       <Heading1>Shiki Playground</Heading1>
-      <ThemeDropdown
-        key={theme}
-        initialTheme={theme}
-        themes={["nord", "github-dark", "github-light"]}
+      <SettingsDropdown
+        initialOption={theme}
+        options={["nord", "github-dark", "github-light"]}
+        name="theme"
       />
+      <SettingsDropdown
+        initialOption={lang}
+        options={["tsx", "html", "css"]}
+        name="lang"
+      />
+      <CodeInput initialCode={code} />
 
-      <CodePreview
-        key="hello"
-        initialElement={<Shiki code={sampleCode} lang={lang} theme={theme} />}
-        lang={lang}
-        theme={theme}
-      />
+      <Shiki code={code} lang={lang} theme={theme} />
     </>
   );
 }

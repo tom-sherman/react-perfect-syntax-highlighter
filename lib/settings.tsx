@@ -1,6 +1,6 @@
 "use client";
 
-import { cache, use, useState, useTransition } from "react";
+import { cache, use, useDeferredValue, useState, useTransition } from "react";
 import { Textarea } from "./text-area";
 import {
   Select,
@@ -69,35 +69,26 @@ const cachedTokenizeCode = cache((code: string, lang: string, theme: string) =>
 
 export function CodePreview({ initialCode }: CodePreview) {
   const [code, setCode] = useState(initialCode);
-  const [isPending, startTransition] = useTransition();
+  const deferredCode = useDeferredValue(code);
   const searchParams = useSearchParams();
   const theme = searchParams.get("theme") ?? "github-dark";
   const lang = searchParams.get("lang") ?? "tsx";
-  const tokens = use(cachedTokenizeCode(code, lang, theme));
+  const tokens = use(cachedTokenizeCode(deferredCode, lang, theme));
 
   return (
     <Stack space={1}>
       <Textarea
-        value={code ?? ""}
-        onChange={async (e) => {
-          const value = e.target.value;
-          startTransition(() => {
-            setCode(value);
-          });
+        value={code}
+        onChange={(e) => {
+          setCode(e.target.value);
         }}
       />
 
-      <div
-        className={cn({
-          "animate-pulse": isPending,
-        })}
-      >
-        <ShikiRenderer
-          tokens={tokens.tokens}
-          background={tokens.background}
-          lang={lang}
-        />
-      </div>
+      <ShikiRenderer
+        tokens={tokens.tokens}
+        background={tokens.background}
+        lang={lang}
+      />
     </Stack>
   );
 }

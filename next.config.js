@@ -2,7 +2,7 @@
 const nextConfig = {
   experimental: {
     appDir: true,
-    serverComponentsExternalPackages: ["shiki"],
+    outputFileTracingIncludes: ["lib/shiki"],
   },
   typescript: {
     ignoreBuildErrors: true,

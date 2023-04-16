@@ -11,7 +11,7 @@ import {
 } from "./select";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { Stack } from "./stack";
-import { tokenizeCode } from "./shiki";
+import { ShikiProps, tokenizeCode } from "./shiki";
 import { ShikiRenderer } from "./shiki-renderer";
 import { cn } from "./utils";
 
@@ -63,17 +63,11 @@ interface CodePreview {
   initialCode: string;
 }
 
-const cachedTokenizeCode = cache((code: string, lang: string, theme: string) =>
-  tokenizeCode(code, lang, theme)
-);
-
 export function CodePreview({ initialCode }: CodePreview) {
   const [code, setCode] = useState(initialCode);
-  const deferredCode = useDeferredValue(code);
   const searchParams = useSearchParams();
   const theme = searchParams.get("theme") ?? "github-dark";
   const lang = searchParams.get("lang") ?? "tsx";
-  const tokens = use(cachedTokenizeCode(deferredCode, lang, theme));
 
   return (
     <Stack space={1}>
@@ -84,11 +78,32 @@ export function CodePreview({ initialCode }: CodePreview) {
         }}
       />
 
-      <ShikiRenderer
-        tokens={tokens.tokens}
-        background={tokens.background}
-        lang={lang}
-      />
+      <ShikiClient code={code} lang={lang} theme={theme} />
     </Stack>
+  );
+}
+
+// This code is really not ideal as it sends a request for every keystroke...
+// Probably because use() and cache() aren't properly supported yet.
+// The UX is mostly correct though.
+const cachedTokenizeCode = cache((code: string, lang: string, theme: string) =>
+  tokenizeCode(code, lang, theme)
+);
+
+function ShikiClient({ code, lang, theme }: ShikiProps) {
+  const deferredCode = useDeferredValue(code);
+  const { tokens, background } = use(
+    cachedTokenizeCode(deferredCode, lang, theme)
+  );
+  const isPending = deferredCode !== code;
+
+  return (
+    <div
+      className={cn({
+        "animate-pulse": isPending,
+      })}
+    >
+      <ShikiRenderer tokens={tokens} background={background} lang={lang} />
+    </div>
   );
 }

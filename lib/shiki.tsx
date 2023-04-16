@@ -3,7 +3,7 @@ import { getHighlighter as shikiGetHighlighter } from "shiki";
 import { cache } from "react";
 import { ShikiRenderer } from "./shiki-renderer";
 
-interface ShikiProps {
+export interface ShikiProps {
   code: string;
   lang: string;
   theme: string;

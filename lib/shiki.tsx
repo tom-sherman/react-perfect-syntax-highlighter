@@ -1,7 +1,7 @@
 "use server";
-import { getHighlighter as shikiGetHighlighter } from "shiki";
-import { cache } from "react";
-import { ShikiRenderer } from "./shiki-renderer";
+import { FontStyle, getHighlighter as shikiGetHighlighter } from "shiki";
+import { CSSProperties, Fragment, cache } from "react";
+import clsx from "clsx";
 
 export interface ShikiProps {
   code: string;
@@ -11,24 +11,53 @@ export interface ShikiProps {
 }
 
 export async function Shiki({ code, lang, theme, className }: ShikiProps) {
-  const { tokens, background } = await tokenizeCode(code, lang, theme);
+  const highlighter = await getHighlighter(lang, theme);
+  const tokens = highlighter.codeToThemedTokens(code, lang, theme);
+  const background = highlighter.getBackgroundColor(theme);
 
   return (
-    <ShikiRenderer
-      tokens={tokens}
-      background={background}
-      lang={lang}
-      className={className}
-    />
+    <pre
+      className={clsx("shiki overflow-x-auto p-4 rounded", lang, className)}
+      style={{ backgroundColor: background }}
+      tabIndex={0}
+    >
+      <code>
+        {tokens.map((tokenLine, i) => (
+          <Fragment key={i}>
+            <span className="line">
+              {tokenLine.map((token, j) => {
+                const style: CSSProperties = {
+                  color: token.color,
+                };
+                if (token.fontStyle) {
+                  if (token.fontStyle & FontStyle.Italic) {
+                    style["fontStyle"] = "italic";
+                  }
+                  if (token.fontStyle & FontStyle.Bold) {
+                    style["fontWeight"] = "bold";
+                  }
+                  if (token.fontStyle & FontStyle.Underline) {
+                    style["textDecoration"] = "underline";
+                  }
+                }
+
+                return (
+                  <span key={j} style={style}>
+                    {token.content}
+                  </span>
+                );
+              })}
+            </span>
+            {i < tokens.length - 1 && "\n"}
+          </Fragment>
+        ))}
+      </code>
+    </pre>
   );
 }
 
 export async function tokenizeCode(code: string, lang: string, theme: string) {
-  const highlighter = await getHighlighter(lang, theme);
-  return {
-    tokens: highlighter.codeToThemedTokens(code, lang, theme),
-    background: highlighter.getBackgroundColor(theme),
-  };
+  return <Shiki code={code} lang={lang} theme={theme} />;
 }
 
 const highlighterPromise = shikiGetHighlighter({});

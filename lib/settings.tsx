@@ -1,6 +1,6 @@
 "use client";
 
-import { cache, use, useDeferredValue, useState, useTransition } from "react";
+import { ReactNode, startTransition, useState, useTransition } from "react";
 import { Textarea } from "./text-area";
 import {
   Select,
@@ -11,9 +11,7 @@ import {
 } from "./select";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { Stack } from "./stack";
-import { ShikiProps, tokenizeCode } from "./shiki";
-import { ShikiRenderer } from "./shiki-renderer";
-import { cn } from "./utils";
+import { tokenizeCode } from "./shiki";
 
 interface DropdownProps {
   options: string[];
@@ -60,10 +58,11 @@ export function SettingsDropdown({
 }
 
 interface CodePreview {
-  initialCode: string;
+  initialCode: ReactNode;
+  initialCodeString: string;
 }
 
-export function CodePreview({ initialCode }: CodePreview) {
+export function CodePreview({ initialCode, initialCodeString }: CodePreview) {
   const [code, setCode] = useState(initialCode);
   const searchParams = useSearchParams();
   const theme = searchParams.get("theme") ?? "github-dark";
@@ -72,38 +71,16 @@ export function CodePreview({ initialCode }: CodePreview) {
   return (
     <Stack space={1}>
       <Textarea
-        value={code}
-        onChange={(e) => {
-          setCode(e.target.value);
+        defaultValue={initialCodeString}
+        onChange={async (e) => {
+          const tokenized = await tokenizeCode(e.target.value, lang, theme);
+          startTransition(() => {
+            setCode(tokenized);
+          });
         }}
       />
 
-      <ShikiClient code={code} lang={lang} theme={theme} />
+      {code}
     </Stack>
-  );
-}
-
-// This code is really not ideal as it sends a request for every keystroke...
-// Probably because use() and cache() aren't properly supported yet.
-// The UX is mostly correct though.
-const cachedTokenizeCode = cache((code: string, lang: string, theme: string) =>
-  tokenizeCode(code, lang, theme)
-);
-
-function ShikiClient({ code, lang, theme }: ShikiProps) {
-  const deferredCode = useDeferredValue(code);
-  const { tokens, background } = use(
-    cachedTokenizeCode(deferredCode, lang, theme)
-  );
-  const isPending = deferredCode !== code;
-
-  return (
-    <div
-      className={cn({
-        "animate-pulse": isPending,
-      })}
-    >
-      <ShikiRenderer tokens={tokens} background={background} lang={lang} />
-    </div>
   );
 }

@@ -1,4 +1,5 @@
 import { CodePreview, SettingsDropdown } from "@/lib/settings";
+import { Shiki } from "@/lib/shiki";
 import { Heading1 } from "@/lib/typography";
 
 export default function Playground({
@@ -32,7 +33,10 @@ export default function Playground({
         name="lang"
       />
 
-      <CodePreview initialCode={code} />
+      <CodePreview
+        initialCode={<Shiki code={sampleCode} lang={lang} theme={theme} />}
+        initialCodeString={sampleCode}
+      />
     </>
   );
 }

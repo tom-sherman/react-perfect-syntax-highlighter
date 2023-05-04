@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, startTransition, useState, useTransition } from "react";
+import { ReactNode, useState, useTransition } from "react";
 import { Textarea } from "./text-area";
 import {
   Select,
@@ -12,6 +12,7 @@ import {
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { Stack } from "./stack";
 import { tokenizeCode } from "./shiki";
+import { cn } from "./utils";
 
 interface DropdownProps {
   options: string[];
@@ -65,6 +66,7 @@ interface CodePreview {
 export function CodePreview({ initialCode, initialCodeString }: CodePreview) {
   const [code, setCode] = useState(initialCode);
   const searchParams = useSearchParams();
+  const [isPending, startTransition] = useTransition();
   const theme = searchParams.get("theme") ?? "github-dark";
   const lang = searchParams.get("lang") ?? "tsx";
 
@@ -80,7 +82,13 @@ export function CodePreview({ initialCode, initialCodeString }: CodePreview) {
         }}
       />
 
-      {code}
+      <div
+        className={cn({
+          "animate-pulse": isPending,
+        })}
+      >
+        {code}
+      </div>
     </Stack>
   );
 }

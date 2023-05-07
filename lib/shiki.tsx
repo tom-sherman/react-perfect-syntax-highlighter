@@ -1,5 +1,9 @@
 "use server";
-import { FontStyle, getHighlighter as shikiGetHighlighter } from "shiki";
+import {
+  BUNDLED_LANGUAGES,
+  FontStyle,
+  getHighlighter as shikiGetHighlighter,
+} from "shiki";
 import { CSSProperties, Fragment, cache } from "react";
 import clsx from "clsx";
 
@@ -70,7 +74,13 @@ const getHighlighter = cache(async (language: string, theme: string) => {
 
   let promises = [];
   if (!loadedLanguages.includes(language as any)) {
-    promises.push(highlighter.loadLanguage(language as any));
+    const languageRegistration = BUNDLED_LANGUAGES.find(
+      (l) => l.id === language
+    );
+    if (!languageRegistration) {
+      throw new Error(`Language not found: ${language}`);
+    }
+    promises.push(highlighter.loadLanguage(languageRegistration));
   }
 
   if (!loadedThemes.includes(theme as any)) {

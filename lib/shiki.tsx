@@ -84,7 +84,8 @@ const getHighlighter = cache(async (language: string, theme: string) => {
   }
 
   if (!loadedThemes.includes(theme as any)) {
-    promises.push(highlighter.loadTheme(theme));
+    const themeRegistration = await import(`shiki/themes/${theme}.json`);
+    promises.push(highlighter.loadTheme(themeRegistration));
   }
 
   await Promise.all(promises);

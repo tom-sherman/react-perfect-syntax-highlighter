@@ -1,4 +1,4 @@
-"use server";
+import "server-only";
 import {
   BUNDLED_LANGUAGES,
   FontStyle,
@@ -62,6 +62,7 @@ export async function Shiki({ code, lang, theme, className }: ShikiProps) {
 }
 
 export async function tokenizeCode(code: string, lang: string, theme: string) {
+  "use server";
   return <Shiki code={code} lang={lang} theme={theme} />;
 }
 

@@ -11,7 +11,6 @@ import {
 } from "./select";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { Stack } from "./stack";
-import { tokenizeCode } from "./shiki/shiki";
 import { cn } from "./utils";
 
 interface DropdownProps {
@@ -61,9 +60,18 @@ export function SettingsDropdown({
 interface CodePreview {
   initialCode: ReactNode;
   initialCodeString: string;
+  tokenizeCode: (
+    code: string,
+    lang: string,
+    theme: string
+  ) => Promise<JSX.Element>;
 }
 
-export function CodePreview({ initialCode, initialCodeString }: CodePreview) {
+export function CodePreview({
+  initialCode,
+  initialCodeString,
+  tokenizeCode,
+}: CodePreview) {
   const [code, setCode] = useState(initialCode);
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();

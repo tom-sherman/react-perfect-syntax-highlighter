@@ -1,5 +1,5 @@
 import { CodePreview, SettingsDropdown } from "@/lib/settings";
-import { Shiki } from "@/lib/shiki";
+import { Shiki } from "@/lib/shiki/shiki";
 import { Heading1 } from "@/lib/typography";
 
 export default function Playground({

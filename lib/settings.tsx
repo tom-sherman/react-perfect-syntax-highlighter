@@ -11,7 +11,7 @@ import {
 } from "./select";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { Stack } from "./stack";
-import { tokenizeCode } from "./shiki";
+import { tokenizeCode } from "./shiki/shiki";
 import { cn } from "./utils";
 
 interface DropdownProps {

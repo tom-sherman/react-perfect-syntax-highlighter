@@ -1,5 +1,5 @@
 import { Button } from "@/lib/button";
-import { Shiki } from "@/lib/shiki";
+import { Shiki } from "@/lib/shiki/shiki";
 import { Stack } from "@/lib/stack";
 import { Heading1, Paragraph } from "@/lib/typography";
 

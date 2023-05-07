@@ -6,6 +6,7 @@ import {
 } from "shiki";
 import { CSSProperties, Fragment, cache } from "react";
 import clsx from "clsx";
+import { NEXT_BUNDLED_THEMES } from "./themes";
 
 export interface ShikiProps {
   code: string;
@@ -84,7 +85,10 @@ const getHighlighter = cache(async (language: string, theme: string) => {
   }
 
   if (!loadedThemes.includes(theme as any)) {
-    const themeRegistration = await import(`shiki/themes/${theme}.json`);
+    const themeRegistration = NEXT_BUNDLED_THEMES.find((t) => t.name === theme);
+    if (!themeRegistration) {
+      throw new Error(`Theme not found: ${theme}`);
+    }
     promises.push(highlighter.loadTheme(themeRegistration));
   }
 

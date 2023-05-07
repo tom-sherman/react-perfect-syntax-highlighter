@@ -3,6 +3,8 @@ import { Shiki } from "@/lib/shiki/shiki";
 import { Stack } from "@/lib/stack";
 import { Heading1, Paragraph } from "@/lib/typography";
 
+export const dynamic = "error";
+
 export default function Home() {
   return (
     <Stack space={3}>

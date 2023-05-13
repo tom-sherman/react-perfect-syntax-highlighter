@@ -1,6 +1,9 @@
 lockfileVersion: '6.0'
 
 dependencies:
+  '@code-hike/lighter':
+    specifier: ^0.6.6
+    version: 0.6.6
   '@radix-ui/react-select':
     specifier: ^1.2.1
     version: 1.2.1(@types/react@18.0.35)(react-dom@18.2.0)(react@18.2.0)
@@ -68,6 +71,10 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.13.11
+    dev: false
+
+  /@code-hike/lighter@0.6.6:
+    resolution: {integrity: sha512-dLkSpowP4NaWDUgay3Mebb8V+wYqVGRD+Tl8wSfWdtIH0z4OUU3UznSsmvvGpCgkdUIF5DhOPRGRowqkNWQsrg==}
     dev: false
 
   /@floating-ui/core@0.7.3:

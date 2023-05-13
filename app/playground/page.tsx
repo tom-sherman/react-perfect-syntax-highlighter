@@ -1,6 +1,7 @@
 import { CodePreview, SettingsDropdown } from "@/lib/settings";
-import { Shiki, tokenizeCode } from "@/lib/shiki/shiki";
+import { CodeBlock, tokenizeCode } from "@/lib/code-block";
 import { Heading1 } from "@/lib/typography";
+import { isValidTheme } from "@/lib/utils";
 
 export default function Playground({
   searchParams,
@@ -19,6 +20,10 @@ export default function Playground({
     code = sampleCode;
   }
 
+  if (!isValidTheme(theme)) {
+    throw new Error(`Invalid theme: ${theme}`);
+  }
+
   return (
     <>
       <Heading1>Shiki Playground</Heading1>
@@ -34,7 +39,7 @@ export default function Playground({
       />
 
       <CodePreview
-        initialCode={<Shiki code={sampleCode} lang={lang} theme={theme} />}
+        initialCode={<CodeBlock code={sampleCode} lang={lang} theme={theme} />}
         initialCodeString={sampleCode}
         tokenizeCode={tokenizeCode}
       />

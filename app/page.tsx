@@ -1,5 +1,5 @@
 import { Button } from "@/lib/button";
-import { Shiki } from "@/lib/shiki/shiki";
+import { CodeBlock } from "@/lib/code-block";
 import { Stack } from "@/lib/stack";
 import { Heading1, Paragraph } from "@/lib/typography";
 
@@ -20,7 +20,7 @@ export default function Home() {
 
       <Stack space={1}>
         <Paragraph>Here's an example:</Paragraph>
-        <Shiki code={sampleCode} lang="tsx" theme="github-dark" />
+        <CodeBlock code={sampleCode} lang="tsx" theme="github-dark" />
       </Stack>
     </Stack>
   );

@@ -53,15 +53,7 @@ export default function Playground({
 const sampleCode = `// This is some example code
 // Edit the text area and click the button to see it highlighted
 
-export async function Shiki({ code, lang, theme, className }: ShikiProps) {
-  const { tokens, background } = await tokenizeCode(code, lang, theme);
-
-  return (
-    <ShikiRenderer
-      tokens={tokens}
-      background={background}
-      lang={lang}
-      className={className}
-    />
-  );
+export async function tokenizeCode(code: string, lang: string, theme: Theme) {
+  "use server";
+  return <CodeBlock code={code} lang={lang} theme={theme} />;
 }`;

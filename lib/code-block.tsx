@@ -3,19 +3,24 @@ import { Theme, highlight as lighterHighlight } from "@code-hike/lighter";
 import { Fragment, cache } from "react";
 import clsx from "clsx";
 
-export interface ShikiProps {
+export interface CodeBlockProps {
   code: string;
   lang: string;
   theme: Theme;
   className?: string;
 }
 
-export async function CodeBlock({ code, lang, theme, className }: ShikiProps) {
+export async function CodeBlock({
+  code,
+  lang,
+  theme,
+  className,
+}: CodeBlockProps) {
   const { lines, colors } = await highlight(code, lang, theme);
 
   return (
     <pre
-      className={clsx("shiki overflow-x-auto p-4 rounded", lang, className)}
+      className={clsx("codeblock overflow-x-auto p-4 rounded", lang, className)}
       style={{ backgroundColor: colors.background }}
       tabIndex={0}
     >

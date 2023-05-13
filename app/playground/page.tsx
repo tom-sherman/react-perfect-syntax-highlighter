@@ -26,7 +26,7 @@ export default function Playground({
 
   return (
     <>
-      <Heading1>Shiki Playground</Heading1>
+      <Heading1>Playground</Heading1>
       <SettingsDropdown
         initialOption={theme}
         options={["nord", "github-dark", "github-light"]}

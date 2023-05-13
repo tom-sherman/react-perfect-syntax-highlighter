@@ -1,18 +1,20 @@
 import { Button } from "@/lib/button";
 import { CodeBlock } from "@/lib/code-block";
 import { Stack } from "@/lib/stack";
-import { Heading1, Paragraph } from "@/lib/typography";
+import { Heading1, Heading2, Paragraph } from "@/lib/typography";
 
 export default function Home() {
   return (
     <Stack space={3}>
       <Stack space={1}>
-        <Heading1>Shiki React Server Components</Heading1>
+        <Heading1>
+          Perfect syntax highlighting using the same tech as VS Code
+        </Heading1>
         <div>
           <Button asLink href="/playground">
             Playground
           </Button>
-          <Button variant="link" asLink href="/explainer">
+          <Button variant="link" asLink href="#explainer">
             How does it work?
           </Button>
         </div>
@@ -23,62 +25,69 @@ export default function Home() {
         {/* @ts-expect-error Server component */}
         <CodeBlock code={sampleCode} lang="tsx" theme="github-dark" />
       </Stack>
+
+      <section>
+        <Heading2 id="explainer">How does it work?</Heading2>
+        <Paragraph>
+          This website uses React Server components to do syntax highlighting
+          with the same technology as VS Code - giving you the most accurate
+          syntax highlighting.
+        </Paragraph>
+        <Paragraph>
+          Because it uses React Server components, the code is highlighted on
+          the server, and the resulting output is sent to the browser. This
+          means that we send 0kB of JS to the browser to do syntax highlighting.
+        </Paragraph>
+      </section>
     </Stack>
   );
 }
 
-const sampleCode = `"use server";
-import { getHighlighter as shikiGetHighlighter } from "shiki";
-import { cache } from "react";
-import { ShikiRenderer } from "./shiki-renderer";
+const sampleCode = `import "server-only";
+import { Theme, highlight as lighterHighlight } from "@code-hike/lighter";
+import { Fragment, cache } from "react";
+import clsx from "clsx";
 
-interface ShikiProps {
+export interface ShikiProps {
   code: string;
   lang: string;
-  theme: string;
+  theme: Theme;
   className?: string;
 }
 
-export async function Shiki({ code, lang, theme, className }: ShikiProps) {
-  const { tokens, background } = await tokenizeCode(code, lang, theme);
+export async function CodeBlock({ code, lang, theme, className }: ShikiProps) {
+  const { lines, colors } = await highlight(code, lang, theme);
 
   return (
-    <ShikiRenderer
-      tokens={tokens}
-      background={background}
-      lang={lang}
-      className={className}
-    />
+    <pre
+      className={clsx("shiki overflow-x-auto p-4 rounded", lang, className)}
+      style={{ backgroundColor: colors.background }}
+      tabIndex={0}
+    >
+      <code>
+        {lines.map((tokenLine, i) => (
+          <Fragment key={i}>
+            <span className="line">
+              {tokenLine.map((token, j) => {
+                return (
+                  <span key={j} style={token.style}>
+                    {token.content}
+                  </span>
+                );
+              })}
+            </span>
+            {i < lines.length - 1 && "\\n"}
+          </Fragment>
+        ))}
+      </code>
+    </pre>
   );
 }
 
-export async function tokenizeCode(code: string, lang: string, theme: string) {
-  const highlighter = await getHighlighter(lang, theme);
-  return {
-    tokens: highlighter.codeToThemedTokens(code, lang, theme),
-    background: highlighter.getBackgroundColor(),
-  };
+export async function tokenizeCode(code: string, lang: string, theme: Theme) {
+  "use server";
+  // @ts-expect-error Server component
+  return <CodeBlock code={code} lang={lang} theme={theme} />;
 }
 
-const highlighterPromise = shikiGetHighlighter({});
-
-const getHighlighter = cache(async (language: string, theme: string) => {
-  console.log("Loading highlighter", language, theme);
-  const highlighter = await highlighterPromise;
-  const loadedLanguages = highlighter.getLoadedLanguages();
-  const loadedThemes = highlighter.getLoadedThemes();
-
-  let promises = [];
-  if (!loadedLanguages.includes(language as any)) {
-    promises.push(highlighter.loadLanguage(language as any));
-  }
-
-  if (!loadedThemes.includes(theme as any)) {
-    promises.push(highlighter.loadTheme(theme));
-  }
-
-  await Promise.all(promises);
-
-  return highlighter;
-});
-`;
+const highlight = cache(lighterHighlight);`;

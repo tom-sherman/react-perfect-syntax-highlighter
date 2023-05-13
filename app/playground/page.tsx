@@ -3,6 +3,10 @@ import { CodeBlock, tokenizeCode } from "@/lib/code-block";
 import { Heading1 } from "@/lib/typography";
 import { isValidTheme } from "@/lib/utils";
 
+export const metadata = {
+  title: "Perfect Syntax Highlighting Playground",
+};
+
 export default function Playground({
   searchParams,
 }: {

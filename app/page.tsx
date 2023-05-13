@@ -20,6 +20,7 @@ export default function Home() {
 
       <Stack space={1}>
         <Paragraph>Here's an example:</Paragraph>
+        {/* @ts-expect-error Server component */}
         <CodeBlock code={sampleCode} lang="tsx" theme="github-dark" />
       </Stack>
     </Stack>

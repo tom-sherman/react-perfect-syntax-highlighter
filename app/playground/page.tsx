@@ -39,7 +39,10 @@ export default function Playground({
       />
 
       <CodePreview
-        initialCode={<CodeBlock code={sampleCode} lang={lang} theme={theme} />}
+        initialCode={
+          // @ts-expect-error Server component
+          <CodeBlock code={sampleCode} lang={lang} theme={theme} />
+        }
         initialCodeString={sampleCode}
         tokenizeCode={tokenizeCode}
       />

@@ -41,6 +41,7 @@ export async function CodeBlock({ code, lang, theme, className }: ShikiProps) {
 
 export async function tokenizeCode(code: string, lang: string, theme: Theme) {
   "use server";
+  // @ts-expect-error Server component
   return <CodeBlock code={code} lang={lang} theme={theme} />;
 }
 

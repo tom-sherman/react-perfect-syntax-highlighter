@@ -10,7 +10,7 @@ export interface ShikiProps {
   className?: string;
 }
 
-export async function Shiki({ code, lang, theme, className }: ShikiProps) {
+export async function CodeBlock({ code, lang, theme, className }: ShikiProps) {
   const { lines, colors } = await highlight(code, lang, theme);
 
   return (
@@ -41,7 +41,7 @@ export async function Shiki({ code, lang, theme, className }: ShikiProps) {
 
 export async function tokenizeCode(code: string, lang: string, theme: Theme) {
   "use server";
-  return <Shiki code={code} lang={lang} theme={theme} />;
+  return <CodeBlock code={code} lang={lang} theme={theme} />;
 }
 
 const highlight = cache(lighterHighlight);

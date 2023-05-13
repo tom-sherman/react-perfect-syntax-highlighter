@@ -11,7 +11,7 @@ import {
 } from "./select";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { Stack } from "./stack";
-import { cn } from "./utils";
+import { cn, isValidTheme } from "./utils";
 
 interface DropdownProps {
   options: string[];
@@ -60,11 +60,7 @@ export function SettingsDropdown({
 interface CodePreview {
   initialCode: ReactNode;
   initialCodeString: string;
-  tokenizeCode: (
-    code: string,
-    lang: string,
-    theme: string
-  ) => Promise<JSX.Element>;
+  tokenizeCode: typeof import("./code-block").tokenizeCode;
 }
 
 export function CodePreview({
@@ -77,6 +73,10 @@ export function CodePreview({
   const [isPending, startTransition] = useTransition();
   const theme = searchParams.get("theme") ?? "github-dark";
   const lang = searchParams.get("lang") ?? "tsx";
+
+  if (!isValidTheme(theme)) {
+    throw new Error(`Invalid theme: ${theme}`);
+  }
 
   return (
     <Stack space={1}>

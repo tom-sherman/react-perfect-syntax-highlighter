@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useState, useTransition } from "react";
+import { ReactNode, useEffect, useRef, useState, useTransition } from "react";
 import { Textarea } from "./text-area";
 import {
   Select,
@@ -73,14 +73,29 @@ export function CodePreview({
   const [isPending, startTransition] = useTransition();
   const theme = searchParams.get("theme") ?? "github-dark";
   const lang = searchParams.get("lang") ?? "tsx";
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   if (!isValidTheme(theme)) {
     throw new Error(`Invalid theme: ${theme}`);
   }
 
+  useEffect(() => {
+    const textArea = textAreaRef.current;
+    if (!textArea) {
+      return;
+    }
+    tokenizeCode(textAreaRef.current.value, lang, theme).then((tokenized) => {
+      startTransition(() => {
+        setCode(tokenized);
+      });
+    });
+  }, [lang, theme]);
+
   return (
     <Stack space={1}>
       <Textarea
+        ref={textAreaRef}
+        spellCheck={false}
         defaultValue={initialCodeString}
         onChange={async (e) => {
           const tokenized = await tokenizeCode(e.target.value, lang, theme);

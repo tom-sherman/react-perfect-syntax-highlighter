@@ -3,8 +3,14 @@
   "version": "1.0.0",
   "description": "Perfect syntax highlighter for React using server components.",
   "type": "module",
-  "exports": "./dist/codeblock.js",
-  "types": "dist/codeblock.d.ts",
+  "module": "./dist/codeblock.js",
+  "types": "./dist/codeblock.d.ts",
+  "exports": {
+    "./actions": {
+      "import": "./dist/experimental_actions.js",
+      "types": "./dist/experimental_actions.d.ts"
+    }
+  },
   "scripts": {
     "build": "tsc --P ./tsconfig.json --outDir dist"
   },

@@ -60,7 +60,7 @@ export function SettingsDropdown({
 interface CodePreview {
   initialCode: ReactNode;
   initialCodeString: string;
-  tokenizeCode: typeof import("react-perfect-syntax-highlighter").experimental_tokenizeCode;
+  tokenizeCode: typeof import("react-perfect-syntax-highlighter/actions").experimental_tokenizeCode;
 }
 
 export function CodePreview({

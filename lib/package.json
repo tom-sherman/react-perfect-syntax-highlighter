@@ -3,19 +3,16 @@
   "version": "1.0.0",
   "description": "Perfect syntax highlighter for React using server components.",
   "type": "module",
-  "main": "./dist/cjs/codeblock.js",
-  "module": "./dist/codeblock.js",
-  "types": "./dist/codeblock.d.ts",
   "exports": {
     ".": {
-      "module": "./dist/codeblock.js",
       "types": "./dist/codeblock.d.ts",
-      "require": "./dist/cjs/codeblock.js"
+      "require": "./dist/cjs/codeblock.js",
+      "module": "./dist/codeblock.js"
     },
     "./actions": {
-      "import": "./dist/experimental_actions.js",
       "types": "./dist/experimental_actions.d.ts",
-      "require": "./dist/cjs/experimental_actions.js"
+      "require": "./dist/cjs/experimental_actions.js",
+      "import": "./dist/experimental_actions.js"
     }
   },
   "scripts": {

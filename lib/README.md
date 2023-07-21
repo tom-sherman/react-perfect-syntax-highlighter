@@ -2,6 +2,12 @@
 
 🌈 Perfect syntax highlighter for React using server components.
 
+## Installation
+
+```bash
+npm install react-perfect-syntax-highlighter
+```
+
 ## Usage
 
 ```tsx

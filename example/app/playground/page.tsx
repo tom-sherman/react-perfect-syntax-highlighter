@@ -2,7 +2,7 @@ import { CodePreview, SettingsDropdown } from "@/lib/settings";
 import {
   CodeBlock,
   experimental_tokenizeCode as tokenizeCode,
-} from "react-perfect-syntax";
+} from "react-perfect-syntax-highlighter";
 import { Heading1 } from "@/lib/typography";
 import { isValidTheme } from "@/lib/utils";
 

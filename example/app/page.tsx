@@ -1,5 +1,5 @@
 import { Button } from "@/lib/button";
-import { CodeBlock } from "react-perfect-syntax";
+import { CodeBlock } from "react-perfect-syntax-highlighter";
 import { Stack } from "@/lib/stack";
 import { Heading1, Heading2, Paragraph } from "@/lib/typography";
 

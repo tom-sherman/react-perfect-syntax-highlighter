@@ -43,7 +43,11 @@ export async function CodeBlock({
   );
 }
 
-export async function tokenizeCode(code: string, lang: string, theme: Theme) {
+export async function experimental_tokenizeCode(
+  code: string,
+  lang: string,
+  theme: Theme
+) {
   "use server";
   return <CodeBlock code={code} lang={lang} theme={theme} />;
 }

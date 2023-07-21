@@ -1,5 +1,8 @@
 import { CodePreview, SettingsDropdown } from "@/lib/settings";
-import { CodeBlock, tokenizeCode } from "react-perfect-syntax";
+import {
+  CodeBlock,
+  experimental_tokenizeCode as tokenizeCode,
+} from "react-perfect-syntax";
 import { Heading1 } from "@/lib/typography";
 import { isValidTheme } from "@/lib/utils";
 

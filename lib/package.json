@@ -1,7 +1,7 @@
 {
   "name": "react-perfect-syntax-highlighter",
   "version": "0.1.0",
-  "description": "",
+  "description": "Perfect syntax highlighter for React using server components.",
   "type": "module",
   "exports": "./dist/codeblock.js",
   "types": "dist/codeblock.d.ts",
@@ -11,9 +11,29 @@
   "files": [
     "dist"
   ],
-  "keywords": [],
+  "keywords": [
+    "react",
+    "server component",
+    "server action",
+    "syntax",
+    "highlighter",
+    "code",
+    "codeblock",
+    "code-block",
+    "code block",
+    "code highlighting",
+    "code highlighting react",
+    "code highlighting reactjs",
+    "code highlighting react.js",
+    "code highlighting react component",
+    "code highlighting react"
+  ],
   "author": "Tom Sherman",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tom-sherman/react-perfect-syntax-highlighter.git"
+  },
   "devDependencies": {
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",

@@ -39,10 +39,6 @@ A react component that will render a code block with syntax highlighting using t
 | `lang`      | `string`            | The language to use. See [Languages](#languages). |
 | `className` | `string` (optional) | A class to apply to the code block.               |
 
-### `experimental_tokenizeCode`
-
-A server action that will tokenize the given `code` using the given `language` and `theme`.
-
 ## Themes
 
 A theme is a set of colors that will be used to highlight the code.

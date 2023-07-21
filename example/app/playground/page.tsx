@@ -1,8 +1,6 @@
 import { CodePreview, SettingsDropdown } from "@/lib/settings";
-import {
-  CodeBlock,
-  experimental_tokenizeCode as tokenizeCode,
-} from "react-perfect-syntax-highlighter";
+import { CodeBlock } from "react-perfect-syntax-highlighter";
+import { experimental_tokenizeCode as tokenizeCode } from "react-perfect-syntax-highlighter/actions";
 import { Heading1 } from "@/lib/typography";
 import { isValidTheme } from "@/lib/utils";
 

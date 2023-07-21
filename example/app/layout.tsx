@@ -2,8 +2,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
-export const dynamic = "error";
-
 export const metadata = {
   title: "Perfect Syntax Highlighting",
   description:

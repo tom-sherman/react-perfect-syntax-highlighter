@@ -60,7 +60,7 @@ export function SettingsDropdown({
 interface CodePreview {
   initialCode: ReactNode;
   initialCodeString: string;
-  tokenizeCode: typeof import("./code-block").tokenizeCode;
+  tokenizeCode: typeof import("react-perfect-syntax").tokenizeCode;
 }
 
 export function CodePreview({
@@ -106,9 +106,12 @@ export function CodePreview({
       />
 
       <div
-        className={cn({
-          "animate-pulse": isPending,
-        })}
+        className={cn(
+          {
+            "animate-pulse": isPending,
+          },
+          "[&>pre]:overflow-x-auto [&>pre]:p-4 [&>pre]:rounded"
+        )}
       >
         {code}
       </div>

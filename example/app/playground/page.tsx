@@ -1,5 +1,5 @@
 import { CodePreview, SettingsDropdown } from "@/lib/settings";
-import { CodeBlock, tokenizeCode } from "@/lib/code-block";
+import { CodeBlock, tokenizeCode } from "react-perfect-syntax";
 import { Heading1 } from "@/lib/typography";
 import { isValidTheme } from "@/lib/utils";
 
@@ -45,7 +45,12 @@ export default function Playground({
       <CodePreview
         initialCode={
           // @ts-expect-error Server component
-          <CodeBlock code={sampleCode} lang={lang} theme={theme} />
+          <CodeBlock
+            code={sampleCode}
+            lang={lang}
+            theme={theme}
+            className="overflow-x-auto p-4 rounded"
+          />
         }
         initialCodeString={sampleCode}
         tokenizeCode={tokenizeCode}

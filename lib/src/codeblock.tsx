@@ -1,7 +1,6 @@
 import "server-only";
 import { Theme, highlight as lighterHighlight } from "@code-hike/lighter";
 import { Fragment, cache } from "react";
-import clsx from "clsx";
 
 export interface CodeBlockProps {
   code: string;
@@ -20,7 +19,7 @@ export async function CodeBlock({
 
   return (
     <pre
-      className={clsx("codeblock overflow-x-auto p-4 rounded", lang, className)}
+      className={[lang, className].filter(Boolean).join(" ")}
       style={{ backgroundColor: colors.background }}
       tabIndex={0}
     >
@@ -46,7 +45,6 @@ export async function CodeBlock({
 
 export async function tokenizeCode(code: string, lang: string, theme: Theme) {
   "use server";
-  // @ts-expect-error Server component
   return <CodeBlock code={code} lang={lang} theme={theme} />;
 }
 

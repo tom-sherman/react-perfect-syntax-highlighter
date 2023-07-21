@@ -1,5 +1,5 @@
 import { Button } from "@/lib/button";
-import { CodeBlock } from "@/lib/code-block";
+import { CodeBlock } from "react-perfect-syntax";
 import { Stack } from "@/lib/stack";
 import { Heading1, Heading2, Paragraph } from "@/lib/typography";
 
@@ -23,7 +23,12 @@ export default function Home() {
       <Stack space={1}>
         <Paragraph>Here's an example:</Paragraph>
         {/* @ts-expect-error Server component */}
-        <CodeBlock code={sampleCode} lang="tsx" theme="github-dark" />
+        <CodeBlock
+          code={sampleCode}
+          lang="tsx"
+          theme="github-dark"
+          className="overflow-x-auto p-4 rounded"
+        />
       </Stack>
 
       <section>

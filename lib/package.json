@@ -1,0 +1,26 @@
+{
+  "name": "react-perfect-syntax",
+  "version": "0.1.0",
+  "description": "",
+  "type": "module",
+  "exports": "./dist/codeblock.js",
+  "types": "dist/codeblock.d.ts",
+  "scripts": {
+    "build": "tsc --P ./tsconfig.json --outDir dist"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [],
+  "author": "Tom Sherman",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@code-hike/lighter": "^0.6.6",
+    "server-only": "^0.0.1"
+  }
+}

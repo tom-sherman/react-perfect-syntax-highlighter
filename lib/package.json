@@ -1,6 +1,6 @@
 {
   "name": "react-perfect-syntax-highlighter",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Perfect syntax highlighter for React using server components.",
   "type": "module",
   "exports": "./dist/codeblock.js",

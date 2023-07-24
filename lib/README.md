@@ -15,11 +15,7 @@ import { CodeBlock } from "react-perfect-syntax-highlighter";
 
 export default function Page() {
   return (
-    <CodeBlock
-      language="tsx"
-      theme="dracula-soft"
-      code="const meaning = 40 + 2;"
-    />
+    <CodeBlock lang="tsx" theme="dracula-soft" code="const meaning = 40 + 2;" />
   );
 }
 ```

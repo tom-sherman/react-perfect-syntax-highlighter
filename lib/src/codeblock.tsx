@@ -1,6 +1,5 @@
-import "server-only";
 import { Theme, highlight as lighterHighlight } from "@code-hike/lighter";
-import { Fragment, cache } from "react";
+import { Fragment, cache, use } from "react";
 
 export interface CodeBlockProps {
   code: string;
@@ -9,13 +8,8 @@ export interface CodeBlockProps {
   className?: string;
 }
 
-export async function CodeBlock({
-  code,
-  lang,
-  theme,
-  className,
-}: CodeBlockProps) {
-  const { lines, colors } = await highlight(code, lang, theme);
+export function CodeBlock({ code, lang, theme, className }: CodeBlockProps) {
+  const { lines, colors } = use(highlight(code, lang, theme));
 
   return (
     <pre

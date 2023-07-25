@@ -12,6 +12,11 @@
       "types": "./dist/experimental_actions.d.ts",
       "require": "./dist/cjs/experimental_actions.js",
       "default": "./dist/experimental_actions.js"
+    },
+    "./client": {
+      "types": "./dist/codeblock-client.d.ts",
+      "require": "./dist/cjs/codeblock-client.js",
+      "default": "./dist/codeblock-client.js"
     }
   },
   "scripts": {

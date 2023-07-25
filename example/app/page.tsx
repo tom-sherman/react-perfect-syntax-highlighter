@@ -2,6 +2,7 @@ import { Button } from "@/lib/button";
 import { CodeBlock } from "react-perfect-syntax-highlighter";
 import { Stack } from "@/lib/stack";
 import { Heading1, Heading2, Paragraph } from "@/lib/typography";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -22,13 +23,19 @@ export default function Home() {
 
       <Stack space={1}>
         <Paragraph>Here's an example:</Paragraph>
-        {/* @ts-expect-error Server component */}
         <CodeBlock
           code={sampleCode}
           lang="tsx"
           theme="github-dark"
           className="overflow-x-auto p-4 rounded"
         />
+        <Paragraph>
+          Also see an example doing syntax highlighting on the client{" "}
+          <Link href="/client-test" className="underline font-bold">
+            here
+          </Link>
+          .
+        </Paragraph>
       </Stack>
 
       <section>

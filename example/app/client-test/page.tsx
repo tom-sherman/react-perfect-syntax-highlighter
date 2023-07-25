@@ -1,7 +1,7 @@
 "use client";
 import { Textarea } from "@/lib/text-area";
 import { Suspense, startTransition, useState } from "react";
-import { experimental_CodeBlockClient as CodeBlockClient } from "react-perfect-syntax-highlighter/client";
+import { CodeBlock } from "react-perfect-syntax-highlighter";
 
 export default function Page() {
   const [code, setCode] = useState("const x = 40 + 2;");
@@ -16,7 +16,7 @@ export default function Page() {
         }}
       />
       <Suspense>
-        <CodeBlockClient lang="tsx" theme="github-dark" code={code} />
+        <CodeBlock lang="tsx" theme="github-dark" code={code} />
       </Suspense>
     </>
   );

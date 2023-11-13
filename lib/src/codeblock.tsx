@@ -15,12 +15,12 @@ export async function CodeBlock({
   theme,
   className,
 }: CodeBlockProps) {
-  const { lines, colors } = await highlight(code, lang, theme);
+  const { lines, style } = await highlight(code, lang, theme);
 
   return (
     <pre
       className={[lang, className].filter(Boolean).join(" ")}
-      style={{ backgroundColor: colors.background }}
+      style={style}
       tabIndex={0}
     >
       <code>

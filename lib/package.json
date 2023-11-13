@@ -51,7 +51,7 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
-    "@code-hike/lighter": "^0.6.6",
+    "@code-hike/lighter": "^0.9.0",
     "server-only": "^0.0.1"
   }
 }
